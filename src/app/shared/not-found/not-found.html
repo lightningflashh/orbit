@@ -1,0 +1,56 @@
+<div class="min-h-screen bg-[#020617] text-white flex flex-col items-center justify-center relative overflow-hidden font-sans">
+  
+  <div class="absolute inset-0 z-0 pointer-events-none">
+    <div class="star w-0.5 h-0.5 top-20 left-[10%]" style="--duration: 3s"></div>
+    <div class="star w-1 h-1 top-40 left-[50%]" style="--duration: 5s"></div>
+    <div class="star w-0.5 h-0.5 top-[70%] left-[25%]" style="--duration: 4s"></div>
+    <div class="star w-1 h-1 top-[85%] left-[80%]" style="--duration: 6s"></div>
+  </div>
+
+  <div class="absolute inset-0 z-0 pointer-events-none">
+    <div class="shooting-star top-10 -right-20" style="--duration: 4s; --delay: 1s"></div>
+    <div class="shooting-star top-[40%] -right-20" style="--duration: 6s; --delay: 3s"></div>
+  </div>
+
+  <div class="absolute w-[400px] h-[400px] md:w-[600px] md:h-[600px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0">
+    <div class="w-full h-full rounded-full bg-indigo-500/10 blur-[100px] animate-pulse"></div>
+  </div>
+
+  <div class="relative z-10 text-center p-10 md:p-16 bg-slate-900/40 backdrop-blur-3xl rounded-[40px] border border-white/10 shadow-2xl max-w-2xl mx-4">
+    
+    <div class="absolute -top-12 left-1/2 -translate-x-1/2 w-24 h-24 bg-indigo-600/20 rounded-full blur-2xl"></div>
+
+    <h1 class="text-8xl md:text-[12rem] font-black italic tracking-tighter leading-none mb-4">
+      <span class="text-transparent bg-clip-text bg-gradient-to-b from-white via-indigo-300 to-indigo-500 opacity-90">
+        404
+      </span>
+    </h1>
+
+    <div class="space-y-4">
+      <h2 class="text-2xl md:text-4xl font-bold tracking-tight text-white">
+        Mất tích giữa ngân hà?
+      </h2>
+      <p class="text-slate-400 text-base md:text-lg max-w-md mx-auto leading-relaxed">
+        Trang bạn tìm kiếm đã trôi dạt vào hố đen vũ trụ. <br class="hidden md:block">
+        Để <span class="text-indigo-400 font-semibold">Orbit</span> đưa bạn về đất liền nhé.
+      </p>
+    </div>
+    
+    <div class="mt-10">
+      <a routerLink="/" class="group relative inline-flex items-center justify-center px-10 py-4 font-bold text-white transition-all duration-200 bg-indigo-600 rounded-full hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 shadow-lg shadow-indigo-500/25">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 transition-transform group-hover:-translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        Quay lại Trang Chủ
+      </a>
+    </div>
+  </div>
+
+  <div class="absolute bottom-10 right-10 md:right-20 opacity-30 animate-bounce transition-all duration-[3000ms] pointer-events-none">
+    <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="0.5">
+       <circle cx="12" cy="8" r="5" stroke-dasharray="2 2"/>
+       <path d="M7 15c-1 0-2 1-2 2v2h14v-2c0-1-1-2-2-2H7z" />
+    </svg>
+  </div>
+
+</div>

@@ -1,0 +1,14 @@
+:host {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Hiệu ứng xoay tiểu hành tinh quanh tâm SVG */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Làm mượt chuyển động */
+svg ellipse {
+    transition: all 0.5s ease;
+}

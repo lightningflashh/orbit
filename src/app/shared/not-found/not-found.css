@@ -1,0 +1,26 @@
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle var(--duration) ease-in-out infinite;
+}
+
+@keyframes shooting {
+  0% { transform: translateX(0) translateY(0) rotate(-45deg) scale(0); opacity: 0; }
+  10% { opacity: 1; scale: 1; }
+  100% { transform: translateX(-800px) translateY(800px) rotate(-45deg) scale(1); opacity: 0; }
+}
+
+.shooting-star {
+  position: absolute;
+  width: 120px;
+  height: 1px;
+  background: linear-gradient(90deg, white, transparent);
+  animation: shooting var(--duration) linear infinite;
+  animation-delay: var(--delay);
+}
