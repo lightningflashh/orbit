@@ -46,10 +46,26 @@
       </div>
 
       <div class="flex items-center space-x-6">
-        <button class="text-sm font-medium text-slate-400 hover:text-white transition">Explore</button>
-        <button routerLink="/login" class="relative inline-flex items-center justify-center px-8 py-3 font-bold text-white transition-all duration-200 bg-indigo-600 font-pj rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 shadow-[0_0_20px_rgba(79,70,229,0.4)] hover:shadow-indigo-500/60 active:scale-95">
-            Get Started
-        </button>
+        @if (authService.currentUser()) {
+          <div class="flex items-center space-x-4">
+            <div class="flex items-center space-x-3 px-4 py-2 bg-white/5 border border-white/10 rounded-full">
+              <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-500 to-cyan-400 flex items-center justify-center text-xs font-bold text-white shadow-lg">
+                U
+              </div>
+              <span class="text-sm font-medium text-slate-200">Account</span>
+            </div>
+            
+            <button (click)="onLogout()" 
+                    class="text-sm font-bold text-indigo-400 hover:text-indigo-300 transition-colors uppercase tracking-wider">
+              Sign Out
+            </button>
+          </div>
+        } @else {
+          <button routerLink="/login" 
+                  class="relative inline-flex items-center justify-center px-8 py-3 font-bold text-white transition-all duration-200 bg-indigo-600 font-pj rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 shadow-[0_0_20px_rgba(79,70,229,0.4)] hover:shadow-indigo-500/60 active:scale-95">
+              Get Started
+          </button>
+        }
       </div>
 
     </div>
