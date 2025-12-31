@@ -1,59 +1,133 @@
-# Orbit
+# 🌍 ORBIT – English Self-Learning Web Application
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.4.
+ORBIT is a full-stack web application that provides a **free English self-learning platform for students**.  
+The project focuses on **secure authentication**, **scalable architecture**, and a **modern frontend experience**, making it suitable both for real usage and as a portfolio project.
 
-## Development server
+---
 
-To start a local development server, run:
+## ✨ Highlights
+
+- JWT authentication with **HttpOnly cookies**
+- **Refresh Token** mechanism with Redis revocation
+- Stateless backend using Spring Security
+- Automatic token refresh via Angular HTTP Interceptors
+- Clean and modular architecture (Backend & Frontend separated)
+- Dockerized infrastructure
+
+---
+
+## 🧩 Core Features
+
+- User authentication (login / logout)
+- Role-based authorization
+- Secure token handling (Access Token + Refresh Token)
+- English learning modules (extendable)
+- Responsive UI for desktop and mobile
+
+---
+
+## 🛠 Tech Stack
+
+### Backend
+
+- Java 17
+- Spring Boot
+- Spring Security
+- JWT (Nimbus)
+- JPA / Hibernate
+- MySQL
+- Redis
+- Docker
+
+### Frontend
+
+- Angular
+- TypeScript
+- RxJS
+- Bootstrap
+
+---
+
+## 🏗 Architecture Overview
+
+- **Access Token**: Short-lived JWT stored in HttpOnly Cookie
+- **Refresh Token**: Stored and managed in Redis
+- **Security**: Stateless API with Spring Security Resource Server
+- **Frontend**: Angular interceptors handle authentication & refresh flow automatically
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone Repository
 
 ```bash
-ng serve
+git clone https://github.com/your-username/orbit.git
+cd orbit
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### 2. Start Infrastructure (MySQL + Redis)
 
 ```bash
-ng generate component component-name
+docker-compose up -d
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
+
+### 3. Run Backend
 
 ```bash
-ng generate --help
+cd backend
+./mvnw spring-boot:run
 ```
 
-## Building
+Backend runs at:
 
-To build the project run:
+```
+http://localhost:8099
+```
+
+---
+
+### 4. Run Frontend
 
 ```bash
-ng build
+cd frontend
+npm install
+ng serve (--configuration=development)
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Frontend runs at:
 
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
+```
+http://localhost:4200
 ```
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
+## 🔐 Authentication Flow
 
-```bash
-ng e2e
-```
+1. User logs in → Backend issues JWT & Refresh Token
+2. Access Token stored in HttpOnly Cookie
+3. Frontend sends requests with `withCredentials`
+4. Token expired → Interceptor calls `/api/refresh`
+5. Refresh token validated in Redis → New access token issued
+6. Logout → Refresh token revoked
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+---
 
-## Additional Resources
+## 📌 Project Purpose
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+This project is built as:
+
+- A **real-world authentication system example**
+- A **full-stack portfolio project**
+- A foundation for extending English learning features
+
+---
+
+## 📄 License
+
+This project is for **educational and portfolio purposes**.

@@ -10,43 +10,101 @@
       <p class="mt-2 text-sm text-gray-400 font-medium">Create an account to start your mission.</p>
     </div>
 
-    <form class="space-y-4">
-      <input type="text" placeholder="Username"
-        class="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-slate-500 outline-none focus:border-purple-500 transition-all">
+    <form (ngSubmit)="onRegister()" #registerForm="ngForm" class="space-y-4">
       
-      <input type="email" placeholder="Email Address"
-        class="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-slate-500 outline-none focus:border-purple-500 transition-all">
+      <div>
+        <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">Username <span class="text-red-500">*</span></label>
+        <input type="text" name="username" [(ngModel)]="registerData.login" required #username="ngModel"
+          placeholder="Enter username"
+          class="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-slate-500 outline-none focus:border-purple-500 transition-all"
+          [class.border-red-500/50]="username.invalid && username.touched">
+      </div>
+      
+      <div>
+        <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">
+          Email Address <span class="text-red-500">*</span>
+        </label>
+        <div class="relative">
+          <input type="email" 
+                name="email" 
+                [(ngModel)]="registerData.email" 
+                required 
+                email 
+                #email="ngModel"
+                placeholder="example@orbit.com"
+                class="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-slate-500 outline-none focus:border-purple-500 transition-all"
+                [class.border-red-500/50]="email.invalid && email.touched">
+          
+          @if (email.invalid && email.touched) {
+            <div class="absolute right-4 top-1/2 -translate-y-1/2 text-pink-500">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+              </svg>
+            </div>
+          }
+        </div>
+
+        @if (email.invalid && email.touched) {
+          <div class="mt-1 ml-2">
+            @if (email.errors?.['required']) {
+              <p class="text-[10px] text-pink-500 font-bold uppercase tracking-wider">Email không được để trống</p>
+            }
+            @if (email.errors?.['email']) {
+              <p class="text-[10px] text-pink-500 font-bold uppercase tracking-wider">Định dạng email không hợp lệ (thiếu @ hoặc domain)</p>
+            }
+          </div>
+        }
+      </div>
 
       <div class="relative">
-        <input [type]="showPassword ? 'text' : 'password'" placeholder="Password"
-          class="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-slate-500 outline-none focus:border-purple-500 transition-all">
+        <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">Password <span class="text-red-500">*</span></label>
+        <input [type]="showPassword ? 'text' : 'password'" name="password" [(ngModel)]="registerData.password" required minlength="6" #password="ngModel"
+          placeholder="••••••••"
+          class="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-slate-500 outline-none focus:border-purple-500 transition-all"
+          [class.border-red-500/50]="password.invalid && password.touched">
         <button type="button" (click)="showPassword = !showPassword" 
-          class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-purple-400 transition-colors">
-          <svg *ngIf="!showPassword" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-          </svg>
-          <svg *ngIf="showPassword" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" />
-          </svg>
+          class="absolute right-4 top-10 text-slate-500 hover:text-purple-400 transition-colors">
+          @if (!showPassword) {
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+          } @else {
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" /></svg>
+          }
         </button>
       </div>
 
       <div class="relative">
-        <input [type]="showConfirmPassword ? 'text' : 'password'" placeholder="Confirm Password"
-          class="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-slate-500 outline-none focus:border-purple-500 transition-all">
-        <button type="button" (click)="showConfirmPassword = !showConfirmPassword" 
-          class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-purple-400 transition-colors">
-          <svg *ngIf="!showConfirmPassword" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-          </svg>
-          <svg *ngIf="showConfirmPassword" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" />
-          </svg>
-        </button>
+        <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">Confirm Password <span class="text-red-500">*</span></label>
+        <input [type]="showConfirmPassword ? 'text' : 'password'" 
+              name="confirmPassword" 
+              [(ngModel)]="registerData.confirmPassword" 
+              required 
+              #confirmPwd="ngModel"
+              placeholder="••••••••"
+              class="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-2xl text-white outline-none focus:border-purple-500 transition-all"
+              [class.border-red-500/50]="registerData.password !== registerData.confirmPassword && confirmPwd.touched">
+        
+        @if (registerData.password !== registerData.confirmPassword && confirmPwd.touched && registerData.confirmPassword !== '') {
+          <p class="text-[10px] text-pink-500 mt-1 ml-2 font-bold uppercase tracking-wider animate-pulse">
+            Mật khẩu xác nhận không trùng khớp
+          </p>
+        }
+      </div>
+
+      <div class="relative">
+        <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">Language <span class="text-red-500">*</span></label>
+        <select name="langKey" [(ngModel)]="registerData.langKey" required
+          class="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-2xl text-white outline-none focus:border-purple-500 transition-all appearance-none cursor-pointer">
+          <option value="en" class="bg-[#030712] text-white">English</option>
+          <option value="vi" class="bg-[#030712] text-white">Tiếng Việt</option>
+        </select>
+        <div class="absolute right-5 top-10 pointer-events-none text-slate-500">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+        </div>
       </div>
 
       <button type="submit"
-        class="w-full py-4 mt-4 bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-500 hover:to-pink-400 text-white font-bold rounded-2xl shadow-[0_10px_20px_rgba(168,85,247,0.3)] transition-all active:scale-95">
+        [disabled]="registerForm.invalid || registerData.password !== registerData.confirmPassword"
+        class="w-full py-4 mt-4 bg-gradient-to-r from-purple-600 to-pink-500 text-white font-bold rounded-2xl shadow-[0_10px_20px_rgba(168,85,247,0.3)] transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:grayscale">
         CREATE ACCOUNT
       </button>
 

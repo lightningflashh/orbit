@@ -1,0 +1,9 @@
+input:focus {
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Hiệu ứng khi tự động điền key */
+input {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}

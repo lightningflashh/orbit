@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home';
 import { NotFoundComponent } from './shared/not-found/not-found';
 import { guestGuard } from './features/auth/auth.guard';
 import { UserLayoutComponent } from './layout/user-layout/user-layout';
+import { ActivateComponent } from './features/auth/register/activate/activate';
 
 export const routes: Routes = [
   {
@@ -18,6 +19,11 @@ export const routes: Routes = [
     component: RegisterComponent,
     canActivate: [guestGuard],
     title: 'Orbit - Register'
+  },
+  {
+    path: 'account/activate',
+    component: ActivateComponent,
+    title: 'Orbit - Activate Account'
   },
   {
     path: '',

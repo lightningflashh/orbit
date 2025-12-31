@@ -1,13 +1,17 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap, catchError, of } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8099/api';
+  private apiUrl = environment.apiUrl;
+  private router = inject(Router);
 
   // Quản lý trạng thái User bằng Signal
   currentUser = signal<any>(null);
@@ -20,7 +24,20 @@ export class AuthService {
     }
   }
 
-  // Phương thức đăng nhập
+  register(registrationData: any) {
+    return this.http.post(`${this.apiUrl}/register`, registrationData).pipe(
+      tap(() => {
+        console.log('Registration successful');
+      })
+    );
+  }
+
+  activateAccount(key: string) {
+    return this.http.get(`${this.apiUrl}/activate`, {
+      params: { key: key } // BE sẽ nhận được: /api/activate?key=52693...
+    });
+  }
+
   login(credentials: any) {
     return this.http.post(`${this.apiUrl}/authenticate`, credentials, {
       withCredentials: true
@@ -50,15 +67,29 @@ export class AuthService {
     return !!this.currentUser();
   }
 
+  private refreshDoneSubject = new BehaviorSubject<boolean>(false);
+  refreshDone$ = this.refreshDoneSubject.asObservable();
+
+  refreshToken() {
+    this.refreshDoneSubject.next(false);
+
+    return this.http.post(`${this.apiUrl}/refresh`, {}).pipe(
+      tap(() => this.refreshDoneSubject.next(true))
+    );
+  }
+
   logoutLocal() {
     localStorage.removeItem('user');
     this.currentUser.set(null);
   }
 
   logout() {
-    return this.http.post(`${this.apiUrl}/logout`, {}, { withCredentials: true })
-      .pipe(
-        tap(() => this.logoutLocal())
-      );
+    return this.http.post(`${this.apiUrl}/logout`, {}).pipe(
+      tap(() => {
+        this.logoutLocal();
+        this.router.navigate(['/login']);
+      })
+    );
   }
+
 }
