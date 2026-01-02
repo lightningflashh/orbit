@@ -1,0 +1,57 @@
+<div class="min-h-screen pt-20 pb-12 flex items-center justify-center bg-[#030712] px-4 relative overflow-hidden">
+  <div class="absolute top-0 left-1/4 w-[400px] h-[400px] bg-purple-600/10 rounded-full blur-[120px]"></div>
+  <div class="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-pink-600/10 rounded-full blur-[120px]"></div>
+
+  <div class="max-w-4xl w-full p-8 md:p-12 bg-white/[0.01] backdrop-blur-3xl rounded-[2.5rem] border border-white/10 shadow-2xl z-10 relative">
+    <div class="absolute top-6 right-8 flex items-center gap-2">
+      <span class="relative flex h-3 w-3">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-3 w-3 bg-purple-500"></span>
+      </span>
+      <span class="text-[10px] text-purple-400 font-mono tracking-tighter uppercase">Signal Active</span>
+    </div>
+
+    <div class="text-center mb-12">
+      <h2 class="text-4xl font-black text-white uppercase italic tracking-tighter leading-none mb-4">
+        Verify <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">Mission Key</span>
+      </h2>
+      <div class="h-1 w-20 bg-gradient-to-r from-purple-600 to-pink-500 mx-auto mb-4 rounded-full"></div>
+      <p class="text-slate-400 text-sm font-medium max-w-sm mx-auto leading-relaxed">
+        Hệ thống đã nhận diện được tín hiệu kích hoạt. Vui lòng xác thực mã bảo mật 20 ký tự để tiếp tục.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      @for (block of [0, 1, 2, 3]; track block) {
+        <div class="flex gap-1.5 justify-center bg-white/5 p-3 rounded-2xl border border-white/5 shadow-inner">
+          @for (i of [0, 1, 2, 3, 4]; track i) {
+            @let idx = block * 5 + i;
+            <input 
+              #otpInput
+              type="text" 
+              maxlength="1"
+              [(ngModel)]="keyArray[idx]"
+              (input)="onInput($event, idx)"
+              (keydown)="onKeyDown($event, idx)"
+              (paste)="idx === 0 ? onPaste($event) : null"
+              class="w-8 h-12 md:w-9 md:h-12 bg-[#0a0f1d] border border-white/10 rounded-lg text-center text-lg font-bold text-white outline-none focus:border-purple-500 focus:ring-4 focus:ring-purple-500/20 transition-all placeholder-white/5"
+              placeholder="·"
+            />
+          }
+        </div>
+      }
+    </div>
+
+    <div class="space-y-4 justify-center text-center">
+      <button (click)="onConfirm()"
+        [disabled]="getFullKey().length < 20"
+        class="w-full md:w-auto px-16 py-4 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-black rounded-2xl shadow-[0_10px_40px_rgba(168,85,247,0.3)] transition-all active:scale-[0.98] uppercase tracking-[0.2em] disabled:opacity-20 disabled:grayscale disabled:cursor-not-allowed">
+        Initialize Activation
+      </button>
+
+      <p class="text-xs text-slate-500 italic">
+        * Don't have a key? Check your encrypted inbox.
+      </p>
+    </div>
+  </div>
+</div>

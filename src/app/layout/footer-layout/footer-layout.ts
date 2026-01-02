@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-footer',
+  selector: 'footer-layout',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './footer-layout.html'

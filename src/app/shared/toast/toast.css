@@ -1,0 +1,20 @@
+.animate-slide-in {
+    animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%) scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0) scale(1);
+        opacity: 1;
+    }
+}
+
+/* Hiệu ứng mượt mà khi di chuột qua */
+.animate-slide-in:hover {
+    transform: translateY(-2px);
+    transition: transform 0.2s ease;
+}
