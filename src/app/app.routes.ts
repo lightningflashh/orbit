@@ -3,9 +3,14 @@ import { LoginComponent } from './features/auth/login/login';
 import { RegisterComponent } from './features/auth/register/register';
 import { HomeComponent } from './home/home';
 import { NotFoundComponent } from './shared/not-found/not-found';
-import { guestGuard } from './features/auth/auth.guard';
+import { guestGuard } from './features/auth/guest.guard';
+import { authGuard } from './features/auth/auth.guard';
 import { UserLayoutComponent } from './layout/user-layout/user-layout';
 import { ActivateComponent } from './features/auth/register/activate/activate';
+import { StudyComponent } from './features/learn-vocabulary/study';
+import { LibraryComponent } from './features/learn-vocabulary/library-vocabularies/library';
+import { TopicCreateComponent } from './features/learn-vocabulary/topic/topic-create';
+import { VocabEntryComponent } from './features/learn-vocabulary/vocabulary/vocab-entry';
 
 export const routes: Routes = [
   {
@@ -30,6 +35,30 @@ export const routes: Routes = [
     component: UserLayoutComponent,
     children: [
       { path: '', component: HomeComponent },
+      {
+        path: 'topics/create',
+        component: TopicCreateComponent,
+        canActivate: [authGuard],
+        title: 'Orbit - Create Topic'
+      },
+      {
+        path: 'topics/:id/add-vocab',
+        component: VocabEntryComponent,
+        canActivate: [authGuard],
+        title: 'Orbit - Add Vocabulary'
+      },
+      {
+        path: 'learn-vocabulary',
+        component: StudyComponent,
+        canActivate: [authGuard],
+        title: 'Orbit - Learning Mission'
+      },
+      {
+        path: 'learn-vocabulary/library',
+        component: LibraryComponent,
+        canActivate: [authGuard],
+        title: 'Orbit - Vocabulary Library'
+      }
     ]
   },
   {

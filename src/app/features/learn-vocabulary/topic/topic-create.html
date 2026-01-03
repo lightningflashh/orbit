@@ -1,0 +1,49 @@
+<div class="min-h-screen bg-[#030712] pt-24 flex items-center justify-center px-4">
+  <div class="max-w-xl w-full p-10 bg-white/[0.02] border border-white/10 rounded-[2.5rem] backdrop-blur-3xl shadow-2xl relative overflow-hidden">
+    
+    <div class="absolute -top-10 -left-10 w-32 h-32 bg-purple-600/10 rounded-full blur-3xl"></div>
+
+    <div class="mb-8 text-center relative z-10">
+      <div class="w-16 h-16 bg-purple-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-purple-500/30">
+        <i class="fas fa-rocket text-purple-400 text-2xl"></i>
+      </div>
+      <h2 class="text-3xl font-black text-white uppercase italic tracking-tighter">Create New <span class="text-purple-400">Sector</span></h2>
+      <p class="text-slate-400 text-sm mt-2">Xác định chủ đề cho nhiệm vụ học tập mới của bạn.</p>
+    </div>
+
+    <div class="space-y-8 relative z-10">
+      <div>
+        <label class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-3 block ml-1">Topic Title</label>
+        <input type="text" [(ngModel)]="topicTitle" placeholder="e.g. Space Exploration Vocabs"
+               class="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-2xl text-white outline-none focus:border-purple-500 focus:bg-purple-500/5 transition-all shadow-inner">
+      </div>
+
+      <div>
+        <label class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-3 block ml-1">Description</label>
+        <input type="text" [(ngModel)]="description" placeholder="e.g. Vocabulary related to space exploration"
+               class="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-2xl text-white outline-none focus:border-purple-500 focus:bg-purple-500/5 transition-all shadow-inner">
+      </div>
+      
+      <div>
+        <label class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-3 block ml-1">Mission Difficulty</label>
+        <div class="grid grid-cols-3 gap-3">
+          @for (lvl of levels; track lvl) {
+            <button
+              (click)="level = lvl"
+              type="button"
+              [class.active-level]="level === lvl"
+              class="py-3 px-2 bg-white/5 border border-white/10 rounded-xl text-[10px] font-bold text-slate-400 hover:text-white hover:bg-white/10 transition-all uppercase tracking-tighter">
+              {{ lvl }}
+            </button>
+          }
+        </div>
+      </div>
+
+      <button (click)="createTopic()" 
+              [disabled]="!topicTitle"
+              class="w-full py-5 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-black rounded-2xl shadow-[0_10px_30px_rgba(168,85,247,0.2)] hover:shadow-purple-500/40 transition-all active:scale-[0.98] uppercase tracking-widest disabled:opacity-20 disabled:grayscale">
+        INITIALIZE SECTOR
+      </button>
+    </div>
+  </div>
+</div>
