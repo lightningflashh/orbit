@@ -8,9 +8,9 @@ import { authGuard } from './features/auth/auth.guard';
 import { UserLayoutComponent } from './layout/user-layout/user-layout';
 import { ActivateComponent } from './features/auth/register/activate/activate';
 import { StudyComponent } from './features/learn-vocabulary/study';
-import { LibraryComponent } from './features/learn-vocabulary/library-vocabularies/library';
 import { TopicCreateComponent } from './features/learn-vocabulary/topic/topic-create';
 import { VocabEntryComponent } from './features/learn-vocabulary/vocabulary/vocab-entry';
+import { LibraryComponent } from './features/learn-vocabulary/topic/library/topic-lib';
 
 export const routes: Routes = [
   {
@@ -36,6 +36,12 @@ export const routes: Routes = [
     children: [
       { path: '', component: HomeComponent },
       {
+        path: 'topics/my',
+        component: LibraryComponent,
+        canActivate: [authGuard],
+        title: 'Orbit - My Topics'
+      },
+      {
         path: 'topics/create',
         component: TopicCreateComponent,
         canActivate: [authGuard],
@@ -52,12 +58,6 @@ export const routes: Routes = [
         component: StudyComponent,
         canActivate: [authGuard],
         title: 'Orbit - Learning Mission'
-      },
-      {
-        path: 'learn-vocabulary/library',
-        component: LibraryComponent,
-        canActivate: [authGuard],
-        title: 'Orbit - Vocabulary Library'
       }
     ]
   },
