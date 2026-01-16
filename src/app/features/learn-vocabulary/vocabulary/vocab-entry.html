@@ -1,0 +1,119 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<div class="min-h-screen bg-[#020617] text-slate-200 p-6 md:p-12 font-sans relative overflow-hidden" (click)="closeSuggestions()">
+    <div class="star-container">
+      <div class="meteor" style="top: 10%; right: 10%; --duration: 5s; animation-delay: 0s;"></div>
+      <div class="meteor" style="top: 30%; right: -5%; --duration: 7s; animation-delay: 2s;"></div>
+      <div class="meteor" style="top: 50%; right: 20%; --duration: 4s; animation-delay: 1s;"></div>
+      <div class="meteor" style="top: -5%; right: 40%; --duration: 6s; animation-delay: 3s;"></div>
+      <div class="meteor" style="top: 70%; right: 15%; --duration: 8s; animation-delay: 5s;"></div>
+    </div>
+
+    <div class="max-w-5xl mx-auto relative z-10">
+  
+    <div class="flex justify-between items-center mb-12">
+      <div>
+        <h1 class="text-2xl font-black uppercase tracking-[0.2em] text-white">Thiết lập học phần</h1>
+        <p class="text-slate-500 text-sm mt-1">Quản lý và cập nhật kho từ vựng của bạn</p>
+      </div>
+      <button (click)="saveAllCards()" 
+              class="px-10 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold transition-all shadow-lg shadow-indigo-500/20 active:scale-95">
+        Lưu thay đổi
+      </button>
+    </div>
+
+    <div class="space-y-8">
+      @for (card of cards; track $index) {
+        <div class="bg-[#0f172a] rounded-2xl p-8 relative transition-all border border-slate-800 hover:border-indigo-500/50 shadow-xl" 
+             (click)="$event.stopPropagation()">
+          
+          <div class="flex justify-between items-center mb-8 border-b border-slate-800/50 pb-4">
+            <span class="bg-slate-800 text-slate-400 w-8 h-8 flex items-center justify-center rounded-lg font-bold text-sm">{{$index + 1}}</span>
+            
+            <div class="flex gap-6 items-center">
+               <button (click)="toggleExtra($index)" class="text-xs font-bold text-indigo-400 hover:text-indigo-300 uppercase tracking-widest transition-colors">
+                 {{ card.showExtra ? '− Thu gọn' : '+ Thêm chi tiết' }}
+               </button>
+               <div class="h-4 w-[1px] bg-slate-800"></div>
+               <button (click)="openDeleteModal($index, card)" class="text-slate-500 hover:text-red-400 transition-colors">
+                 <i class="fas fa-trash-alt"></i>
+               </button>
+            </div>
+          </div>
+
+          <div class="flex flex-col md:flex-row gap-12 items-start">
+            <div class="flex-1 w-full relative group">
+              <input type="text" [(ngModel)]="card.word" (focus)="activeSuggestionIndex = $index" (ngModelChange)="onWordInput($event, $index)"
+                     class="w-full bg-transparent border-b-2 border-slate-800 focus:border-indigo-500 py-3 text-2xl outline-none font-semibold text-white transition-all"
+                     placeholder="Nhập thuật ngữ...">
+              <label class="text-[10px] font-bold text-slate-500 uppercase mt-3 block tracking-[0.15em]">Thuật ngữ</label>
+
+              @if (activeSuggestionIndex === $index && suggestions.length > 0) {
+                <div class="absolute top-[100%] left-0 right-0 z-[100] mt-3 bg-[#1e293b] border border-slate-700 rounded-xl shadow-2xl overflow-hidden backdrop-blur-xl">
+                  @for (s of suggestions; track s.id) {
+                    <div (click)="selectSuggestion(s, $index)" class="p-4 hover:bg-indigo-600/20 cursor-pointer border-b border-slate-700/50 last:border-0 transition-colors">
+                      <div class="font-bold text-white">{{s.word}} <span class="text-indigo-400 ml-2 font-normal text-sm">{{s.phonetic}}</span></div>
+                      <div class="text-sm text-slate-400 mt-1">{{s.meaning}}</div>
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+
+            <div class="flex-1 w-full">
+              <input type="text" [(ngModel)]="card.meaning"
+                     class="w-full bg-transparent border-b-2 border-slate-800 focus:border-indigo-500 py-3 text-2xl outline-none text-white transition-all"
+                     placeholder="Nhập định nghĩa...">
+              <label class="text-[10px] font-bold text-slate-500 uppercase mt-3 block tracking-[0.15em]">Định nghĩa</label>
+            </div>
+
+            <div class="w-28 h-28 border-2 border-dashed border-slate-800 rounded-2xl flex flex-col items-center justify-center text-slate-500 hover:border-indigo-500/50 hover:bg-indigo-500/5 cursor-pointer transition-all group shrink-0">
+              <i class="fas fa-image text-2xl group-hover:text-indigo-400 transition-colors"></i>
+              <span class="text-[9px] font-bold mt-2 uppercase tracking-tighter">Thêm ảnh</span>
+            </div>
+          </div>
+
+          @if (card.showExtra) {
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10 pt-8 border-t border-slate-800/50 animate-in fade-in slide-in-from-top-4 duration-500">
+              <div class="space-y-2">
+                <label class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Phiên âm (IPA)</label>
+                <input type="text" [(ngModel)]="card.phonetic" placeholder="/phiên âm/"
+                       class="w-full bg-slate-900/50 border border-slate-800 rounded-xl p-3 text-sm text-indigo-300 outline-none focus:border-indigo-500/50">
+              </div>
+              <div class="space-y-2">
+                <label class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Từ loại</label>
+                <div class="relative">
+                    <select [(ngModel)]="card.partOfSpeech" 
+                            class="w-full bg-slate-900/50 border border-slate-800 rounded-xl p-3 text-sm text-indigo-300 outline-none appearance-none focus:border-indigo-500/50">
+                      <option value="">Chọn loại từ</option>
+                      <option value="noun">Danh từ (n)</option>
+                      <option value="verb">Động từ (v)</option>
+                      <option value="adjective">Tính từ (adj)</option>
+                      <option value="adverb">Trạng từ (adv)</option>
+                    </select>
+                    <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-600 text-xs pointer-events-none"></i>
+                </div>
+              </div>
+              <div class="space-y-2">
+                <label class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Câu ví dụ</label>
+                <input type="text" [(ngModel)]="card.example" placeholder="Ví dụ minh họa..."
+                       class="w-full bg-slate-900/50 border border-slate-800 rounded-xl p-3 text-sm text-slate-300 outline-none focus:border-indigo-500/50">
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="mt-16 flex justify-center pb-24">
+      <button (click)="addCard()" 
+              class="group relative bg-[#0f172a] border border-slate-800 px-16 py-8 rounded-2xl transition-all hover:border-indigo-500 shadow-2xl overflow-hidden">
+        <div class="absolute inset-0 bg-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        <span class="relative font-black text-xl tracking-[0.3em] text-white flex items-center gap-4">
+          <i class="fas fa-plus text-indigo-500"></i> THÊM THẺ MỚI
+        </span>
+      </button>
+    </div>
+
+  </div>
+</div>
