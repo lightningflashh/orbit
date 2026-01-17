@@ -7,10 +7,10 @@ import { guestGuard } from './features/auth/guest.guard';
 import { authGuard } from './features/auth/auth.guard';
 import { UserLayoutComponent } from './layout/user-layout/user-layout';
 import { ActivateComponent } from './features/auth/register/activate/activate';
-import { StudyComponent } from './features/learn-vocabulary/study';
 import { TopicCreateComponent } from './features/learn-vocabulary/topic/topic-create';
 import { VocabEntryComponent } from './features/learn-vocabulary/vocabulary/vocab-entry';
 import { LibraryComponent } from './features/learn-vocabulary/topic/library/topic-lib';
+import { FlashcardComponent } from './features/learn-vocabulary/flashcard/flashcard.component';
 
 export const routes: Routes = [
   {
@@ -54,10 +54,10 @@ export const routes: Routes = [
         title: 'Orbit - Add Vocabulary'
       },
       {
-        path: 'learn-vocabulary',
-        component: StudyComponent,
+        path: 'flashcards/topic/:topicId',
+        component: FlashcardComponent,
         canActivate: [authGuard],
-        title: 'Orbit - Learning Mission'
+        title: 'Orbit - Flashcards'
       }
     ]
   },

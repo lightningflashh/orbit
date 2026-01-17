@@ -1,5 +1,5 @@
 import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { VocabularyService } from './vocabulary.service';
@@ -18,7 +18,6 @@ export class VocabEntryComponent implements OnInit {
   private vocabService = inject(VocabularyService);
   private userVocabService = inject(UserVocabularyService);
   private route = inject(ActivatedRoute);
-  private router = inject(Router);
   private cdr = inject(ChangeDetectorRef);
   private toast = inject(ToastService);
 
