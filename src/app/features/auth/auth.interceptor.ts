@@ -33,7 +33,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
             }),
             catchError(err => {
               isRefreshing = false;
-              authService.logout(); // gọi service, không redirect ở interceptor
+              authService.logout();
               return throwError(() => err);
             })
           );

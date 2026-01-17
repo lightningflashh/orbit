@@ -30,12 +30,12 @@ export class LoginComponent {
 
   onLogin() {
     this.authService.login(this.loginData).subscribe({
-      next: (response: any) => {
-        this.toast.show('Access Granted. Welcome back Commander!', 'success');
+      next: _ => {
+        this.toast.show('Login successful. Welcome back Commander!', 'success');
         this.router.navigate(['']);
       },
-      error: (err) => {
-        this.toast.show(err.message || 'Login failed', 'error');
+      error: _ => {
+        this.toast.show('Username or Password is incorrect. Please try again.', 'error');
       }
     });
   }
