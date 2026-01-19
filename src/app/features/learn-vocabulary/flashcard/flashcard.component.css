@@ -60,7 +60,7 @@
     radial-gradient(1px 1px at 50px 70px, #fff, rgba(0,0,0,0)),
     radial-gradient(1.5px 1.5px at 100px 150px, #fff, rgba(0,0,0,0));
   background-size: 200px 200px;
-  opacity: 0.3;
+  opacity: 0.75;
 }
 
 .layer-1 { animation: space-move 100s linear infinite; }

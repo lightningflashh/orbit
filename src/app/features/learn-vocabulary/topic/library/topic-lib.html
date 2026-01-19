@@ -44,7 +44,7 @@
       <button (click)="filterByLevel('')" 
               [class]="selectedLevel === '' ? 'bg-indigo-600 text-white border-indigo-500' : 'bg-slate-900/40 text-slate-400 border-slate-800'"
               class="px-5 py-2 rounded-xl text-xs font-bold border transition-all hover:border-indigo-500 shadow-sm hover:shadow-md">
-        TẤT CẢ
+        ALL
       </button>
 
       @for (level of levels; track level) {
@@ -83,11 +83,11 @@
                 </h3>
                 
                 <p class="text-slate-500 text-sm line-clamp-2 flex-grow">
-                  {{ topic.description || 'Chưa có mô tả cho học phần này.' }}
+                  {{ topic.description || 'No description available for this topic.' }}
                 </p>
 
                 <div class="mt-8 pt-6 border-t border-slate-800/50 flex justify-between items-center group/btn">
-                  <span class="text-xs font-bold text-indigo-400 uppercase tracking-tighter">Học ngay</span>
+                  <span class="text-xs font-bold text-indigo-400 uppercase tracking-tighter">Let's Learn</span>
                   <div class="flex items-center gap-2">
                     <i class="fas fa-play-circle text-slate-700 group-hover:text-indigo-500 transition-all text-xl"></i>
                   </div>

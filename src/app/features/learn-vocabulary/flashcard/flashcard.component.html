@@ -20,53 +20,48 @@
       </div>
     </div>
 
-    <div class="relative z-10 w-full max-w-sm h-[480px] perspective-1000" (click)="toggleFlip()">
-      <div class="relative w-full h-full preserve-3d cursor-pointer transform-gpu" [class.rotate-y-180]="isFlipped">
+<div class="relative z-10 w-full max-w-sm h-[520px] perspective-1000" (click)="toggleFlip()"> <div class="relative w-full h-full preserve-3d cursor-pointer transform-gpu duration-700" [class.rotate-y-180]="isFlipped">
+    
+    <div class="absolute inset-0 w-full h-full backface-hidden magic-border-card p-12 flex flex-col items-center justify-center z-20">
+      <div class="absolute top-10 left-10 w-4 h-[1px] bg-indigo-500/50"></div>
+      <span class="text-indigo-400/50 text-[10px] font-bold uppercase tracking-widest mb-4">English Word</span>
+      <h1 class="text-5xl font-light text-white tracking-tighter text-center uppercase leading-tight mb-6">{{ currentCard.word }}</h1>
+      <div *ngIf="currentCard.phonetic" class="text-indigo-300/60 font-mono text-sm tracking-widest italic">{{ currentCard.phonetic }}</div>
+      <div class="absolute bottom-12 text-[8px] text-slate-500 uppercase tracking-[0.4em] animate-pulse">Tap to explore</div>
+    </div>
+
+    <div class="absolute inset-0 w-full h-full backface-hidden border rounded-[2.5rem] bg-[#0b101f]/75 border-white/5 shadow-2xl p-10 flex flex-col z-10" style="transform: rotateY(180deg);">
+      <div class="flex justify-between items-center mb-6">
+        <span class="text-[9px] font-black text-indigo-400 uppercase tracking-widest">Interpretation</span>
+        <div class="px-3 py-1 bg-white/5 rounded-full border border-white/10 text-[9px] text-indigo-200">{{ currentCard.partOfSpeech }}</div>
+      </div>
+
+      <div class="flex-grow flex flex-col items-start space-y-4">
+        <h2 class="text-3xl font-bold text-white leading-snug tracking-tight">
+          {{ currentCard.meaning }}
+        </h2>
         
-        <div class="absolute inset-0 w-full h-full backface-hidden magic-border-card p-12 flex flex-col items-center justify-center z-20">
-          <div class="absolute top-10 left-10 w-4 h-[1px] bg-indigo-500/50"></div>
-          <span class="text-indigo-400/50 text-[10px] font-bold uppercase tracking-widest mb-4">English Word</span>
-          
-          <h1 class="text-5xl font-light text-white tracking-tighter text-center uppercase leading-tight mb-6">
-            {{ currentCard.word }}
-          </h1>
-
-          <div *ngIf="currentCard.phonetic" class="text-indigo-300/60 font-mono text-sm tracking-widest italic">
-            {{ currentCard.phonetic }}
-          </div>
-          
-          <div class="absolute bottom-12 text-[8px] text-slate-500 uppercase tracking-[0.4em] animate-pulse">
-            Tap to explore
-          </div>
+        <div *ngIf="currentCard.imageUrl" class="w-full h-40 overflow-hidden rounded-3xl border border-white/10 relative group/img">
+          <img [src]="currentCard.imageUrl" 
+               class="w-full h-full object-cover opacity-80 group-hover/img:opacity-100 group-hover/img:scale-105 transition-all duration-500" 
+               alt="Visual aid">
+          <div class="absolute inset-0 bg-gradient-to-t from-[#0b101f] via-transparent to-transparent opacity-40"></div>
         </div>
-
-        <div class="absolute inset-0 w-full h-full backface-hidden border rounded-[2.5rem] border-white/5 shadow-2xl p-10 flex flex-col z-10" style="transform: rotateY(180deg);">
-          <div class="flex justify-between items-center mb-10">
-            <span class="text-[9px] font-black text-indigo-400 uppercase tracking-widest">Interpretation</span>
-            <div class="px-3 py-1 bg-white/5 rounded-full border border-white/10 text-[9px] text-indigo-200">
-              {{ currentCard.partOfSpeech }}
-            </div>
-          </div>
-
-          <div class="flex-grow flex flex-col items-start">
-            <h2 class="text-3xl font-bold text-white mb-8 leading-snug tracking-tight">
-              {{ currentCard.meaning }}
-            </h2>
-            
-            <div *ngIf="currentCard.example" class="w-full p-6 bg-white/[0.02] rounded-[2rem] border border-white/5 shadow-inner">
-              <p class="text-slate-400 italic text-sm leading-relaxed">
-                "{{ currentCard.example }}"
-              </p>
-            </div>
-          </div>
-
-          <div class="mt-auto text-center opacity-20">
-             <div class="text-[8px] font-bold uppercase tracking-[0.5em]">Memory Synced</div>
-          </div>
+        
+        <div *ngIf="currentCard.example" class="w-full p-5 bg-white/[0.02] rounded-[1.5rem] border border-white/5 shadow-inner">
+          <p class="text-slate-400 italic text-xs leading-relaxed">
+            "{{ currentCard.example }}"
+          </p>
         </div>
+      </div>
 
+      <div class="mt-auto text-center opacity-20 pt-4">
+          <div class="text-[8px] font-bold uppercase tracking-[0.5em]">Memory Synced</div>
       </div>
     </div>
+
+  </div>
+</div>
 
     <div class="relative z-10 mt-12 flex gap-5 transition-all duration-700"
          [class.opacity-100]="isFlipped" [class.translate-y-0]="isFlipped"

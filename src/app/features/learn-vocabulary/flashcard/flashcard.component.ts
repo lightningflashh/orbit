@@ -2,6 +2,7 @@ import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { UserVocabularyService, FlashcardCard } from '../user-vocabulary.service';
+import { SessionEventService } from '../shared/session-event.service';
 
 @Component({
   selector: 'app-orbit-session',
@@ -14,6 +15,7 @@ export class FlashcardComponent implements OnInit {
   private flashcardService = inject(UserVocabularyService);
   private route = inject(ActivatedRoute);
   private cdr = inject(ChangeDetectorRef);
+  private sessionEventService = inject(SessionEventService);
 
   sessionId: string | null = null;
   currentCard: FlashcardCard | null = null;
@@ -24,6 +26,13 @@ export class FlashcardComponent implements OnInit {
   ngOnInit() {
     const topicId = Number(this.route.snapshot.paramMap.get('topicId'));
     if (topicId) this.initializeSession(topicId);
+
+    // Lắng nghe tín hiệu reset từ component khác
+    this.sessionEventService.sessionReset$.subscribe((resetTopicId) => {
+      if (resetTopicId === topicId) {
+        this.forceResetCurrentSession(topicId);
+      }
+    });
   }
 
   private initializeSession(topicId: number) {
@@ -94,5 +103,22 @@ export class FlashcardComponent implements OnInit {
     if (this.currentCard && !this.isLoading) {
       this.isFlipped = !this.isFlipped;
     }
+  }
+
+  private forceResetCurrentSession(topicId: number) {
+    const storageKey = `flashcard_session_topic_${topicId}`;
+
+    // 1. Gọi API kết thúc session hiện tại trên server (nếu có)
+    if (this.sessionId) {
+      this.flashcardService.finishSession(this.sessionId).subscribe();
+    }
+
+    // 2. Dọn dẹp local storage và biến local
+    localStorage.removeItem(storageKey);
+    this.sessionId = null;
+    this.currentCard = null;
+
+    // 3. Khởi tạo session mới với data vừa cập nhật
+    this.startNewSession(topicId, storageKey);
   }
 }

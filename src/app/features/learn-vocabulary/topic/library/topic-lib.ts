@@ -50,13 +50,13 @@ export class LibraryComponent implements OnInit {
 
     this.topicService.getUserTopics(
       this.currentPage,
-      12, // pageSize
+      12,
       this.searchTerm,
-      this.selectedLevel // Truyền thêm selectedLevel
+      this.selectedLevel
     ).subscribe({
       next: (res) => {
         if (res.success) {
-          this.topics = res.data.result || []; // Đảm bảo luôn là mảng
+          this.topics = res.data.result || [];
           this.meta = res.data.meta;
         }
         this.isLoading = false;
@@ -91,7 +91,7 @@ export class LibraryComponent implements OnInit {
 
   viewTopic(topicId: number | undefined) {
     if (topicId) {
-      this.router.navigate(['/topics', topicId]);
+      this.router.navigate(['/flashcards/topic', topicId]);
     }
   }
 
@@ -101,7 +101,6 @@ export class LibraryComponent implements OnInit {
     }
   }
 
-  // Hàm cho nút phân trang "trước"
   prevPage() {
     if (this.currentPage > 0) {
       this.currentPage--;
@@ -109,7 +108,6 @@ export class LibraryComponent implements OnInit {
     }
   }
 
-  // Hàm cho nút phân trang "sau"
   nextPage() {
     if (this.meta && this.currentPage < this.meta.pages - 1) {
       this.currentPage++;

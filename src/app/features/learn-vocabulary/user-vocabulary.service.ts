@@ -65,8 +65,12 @@ export class UserVocabularyService {
     return this.http.post<UserVocabulary>(`${this.apiUrl}/${vocabId}`, {});
   }
 
-  addBulkToLearning(topicId: number, cards: any[]): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/bulk/topics/${topicId}`, cards);
+  addBulkToLearning(topicId: number, cards: any[]): Observable<any[]> {
+    return this.http.post<any[]>(`${this.apiUrl}/bulk/topics/${topicId}`, cards);
+  }
+
+  uploadMedia(userVocabId: number, formData: FormData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/${userVocabId}/media`, formData);
   }
 
   /**
