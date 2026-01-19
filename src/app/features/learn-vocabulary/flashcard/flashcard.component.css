@@ -1,0 +1,81 @@
+/* --- VIỀN CHẠY QUANH THẺ (MAGIC BORDER) --- */
+.magic-border-card {
+  position: relative;
+  background: #0d1117;
+  border-radius: 2.5rem;
+  z-index: 10;
+  overflow: hidden;
+}
+/* Dải sáng chạy phía dưới lớp nền của thẻ */
+.magic-border-card::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150%;
+  height: 150%;
+  aspect-ratio: 1;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    #22d3ee 10%,
+    #6366f1 25%,
+    transparent 50%
+  );
+  animation: rotate-border 6s linear infinite;
+  transform: translate(-50%, -50%);
+  z-index: -2;
+}
+
+/* Lớp đệm tạo độ dày cho viền (2px) */
+.magic-border-card::after {
+  content: "";
+  position: absolute;
+  inset: 2px; /* Chỉnh độ dày viền ở đây */
+  background: #0d1117;
+  border-radius: 2.5rem;
+  z-index: -1;
+}
+
+@keyframes rotate-border {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* --- VŨ TRỤ NỀN --- */
+.space-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(circle at center, #0d1117 0%, #050505 100%);
+  overflow: hidden;
+}
+
+/* Các tầng sao Parallax */
+.stars-layer {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: 
+    radial-gradient(1px 1px at 20px 30px, #fff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 50px 70px, #fff, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 100px 150px, #fff, rgba(0,0,0,0));
+  background-size: 200px 200px;
+  opacity: 0.75;
+}
+
+.layer-1 { animation: space-move 100s linear infinite; }
+.layer-2 { background-size: 300px 300px; animation: space-move 150s linear infinite; opacity: 0.2; }
+
+@keyframes space-move {
+  from { transform: translateY(0); }
+  to { transform: translateY(-1000px); }
+}
+
+/* --- HIỆU ỨNG THẺ BÀI --- */
+.perspective-1000 { perspective: 2000px; }
+.preserve-3d { 
+  transform-style: preserve-3d; 
+  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.1); 
+}
+.backface-hidden { backface-visibility: hidden !important; -webkit-backface-visibility: hidden !important; }
+.rotate-y-180 { transform: rotateY(180deg); }

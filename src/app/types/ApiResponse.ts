@@ -1,4 +1,3 @@
-// Interface cho phần phân trang
 export interface PaginationMeta {
   page: number;
   pageSize: number;
@@ -6,7 +5,6 @@ export interface PaginationMeta {
   total: number;
 }
 
-// Interface dùng chung cho mọi API Response
 export interface ApiResponse<T> {
   data: {
     meta: PaginationMeta;

@@ -96,7 +96,7 @@ http://localhost:8099
 ```bash
 cd frontend
 npm install
-ng serve (--configuration=development)
+ng serve (ng serve --configuration=development)
 ```
 
 Frontend runs at:

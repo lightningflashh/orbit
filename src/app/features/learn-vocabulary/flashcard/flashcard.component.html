@@ -1,0 +1,82 @@
+<div class="relative min-h-screen flex flex-col items-center justify-center p-4 text-slate-200 font-sans overflow-hidden">
+  
+  <div class="space-background">
+    <div class="stars-layer layer-1"></div>
+    <div class="stars-layer layer-2"></div>
+    <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-indigo-500/10 blur-[120px] rounded-full"></div>
+    <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-cyan-500/10 blur-[120px] rounded-full"></div>
+  </div>
+
+  <div class="absolute top-0 right-0 w-auto h-auto bg-indigo-400/10 blur-[5px] flex items-center justify-center">
+    <img src="bg_2.jpg" 
+        alt="Astronaut Background" 
+        class="w-auto h-full opacity-20 contrast-125 backdrop-brightness-100 mix-blend-screen">
+  </div> 
+
+  <ng-container *ngIf="!isFinished && currentCard">
+    <div class="pt-15 relative z-10 mb-12 text-center">
+      <div class="tracking-[0.8em] text-[9px] font-bold text-indigo-400 uppercase opacity-60">
+        Interstellar Orbit
+      </div>
+    </div>
+
+<div class="relative z-10 w-full max-w-sm h-[520px] perspective-1000" (click)="toggleFlip()"> <div class="relative w-full h-full preserve-3d cursor-pointer transform-gpu duration-700" [class.rotate-y-180]="isFlipped">
+    
+    <div class="absolute inset-0 w-full h-full backface-hidden magic-border-card p-12 flex flex-col items-center justify-center z-20">
+      <div class="absolute top-10 left-10 w-4 h-[1px] bg-indigo-500/50"></div>
+      <span class="text-indigo-400/50 text-[10px] font-bold uppercase tracking-widest mb-4">English Word</span>
+      <h1 class="text-5xl font-light text-white tracking-tighter text-center uppercase leading-tight mb-6">{{ currentCard.word }}</h1>
+      <div *ngIf="currentCard.phonetic" class="text-indigo-300/60 font-mono text-sm tracking-widest italic">{{ currentCard.phonetic }}</div>
+      <div class="absolute bottom-12 text-[8px] text-slate-500 uppercase tracking-[0.4em] animate-pulse">Tap to explore</div>
+    </div>
+
+    <div class="absolute inset-0 w-full h-full backface-hidden border rounded-[2.5rem] bg-[#0b101f]/75 border-white/5 shadow-2xl p-10 flex flex-col z-10" style="transform: rotateY(180deg);">
+      <div class="flex justify-between items-center mb-6">
+        <span class="text-[9px] font-black text-indigo-400 uppercase tracking-widest">Interpretation</span>
+        <div class="px-3 py-1 bg-white/5 rounded-full border border-white/10 text-[9px] text-indigo-200">{{ currentCard.partOfSpeech }}</div>
+      </div>
+
+      <div class="flex-grow flex flex-col items-start space-y-4">
+        <h2 class="text-3xl font-bold text-white leading-snug tracking-tight">
+          {{ currentCard.meaning }}
+        </h2>
+        
+        <div *ngIf="currentCard.imageUrl" class="w-full h-40 overflow-hidden rounded-3xl border border-white/10 relative group/img">
+          <img [src]="currentCard.imageUrl" 
+               class="w-full h-full object-cover opacity-80 group-hover/img:opacity-100 group-hover/img:scale-105 transition-all duration-500" 
+               alt="Visual aid">
+          <div class="absolute inset-0 bg-gradient-to-t from-[#0b101f] via-transparent to-transparent opacity-40"></div>
+        </div>
+        
+        <div *ngIf="currentCard.example" class="w-full p-5 bg-white/[0.02] rounded-[1.5rem] border border-white/5 shadow-inner">
+          <p class="text-slate-400 italic text-xs leading-relaxed">
+            "{{ currentCard.example }}"
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-auto text-center opacity-20 pt-4">
+          <div class="text-[8px] font-bold uppercase tracking-[0.5em]">Memory Synced</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <div class="relative z-10 mt-12 flex gap-5 transition-all duration-700"
+         [class.opacity-100]="isFlipped" [class.translate-y-0]="isFlipped"
+         [class.opacity-0]="!isFlipped" [class.translate-y-10]="!isFlipped" [class.pointer-events-none]="!isFlipped">
+      
+      <div *ngFor="let label of ['Again', 'Hard', 'Good', 'Easy']; let i = index" 
+           (click)="handleAnswer(i); $event.stopPropagation()"
+           class="group flex flex-col items-center cursor-pointer">
+        <div class="w-14 h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-2 transition-all group-hover:scale-110 group-hover:bg-indigo-500/20 group-hover:border-indigo-500/50 shadow-xl">
+          <span class="text-lg transition-transform group-hover:rotate-12">
+            {{ ['🌑', '🌓', '🌔', '🌕'][i] }}
+          </span>
+        </div>
+        <span class="text-[8px] font-bold text-slate-500 uppercase tracking-tighter group-hover:text-indigo-400">{{ label }}</span>
+      </div>
+    </div>
+  </ng-container>
+</div>

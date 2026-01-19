@@ -16,9 +16,11 @@ export class TopicService {
       .set('size', size.toString())
     if (name && name.trim() !== '') {
       params = params.set('name', name);
+      return this.http.get<ApiResponse<Topic>>(`${this.topicUrl}/search`, { params });
     }
     if (level && level.trim() !== '') {
       params = params.set('level', level);
+      return this.http.get<ApiResponse<Topic>>(`${this.topicUrl}/search`, { params });
     }
 
     return this.http.get<ApiResponse<Topic>>(`${this.topicUrl}/my`, { params });

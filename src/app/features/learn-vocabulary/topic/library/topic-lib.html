@@ -11,14 +11,14 @@
     }
   </div>
 
-  <div class="max-w-7xl mx-auto relative z-10">
+  <div class="pt-15 max-w-7xl mx-auto relative z-10">
     
     <div class="flex flex-col lg:flex-row justify-between items-center mb-16 gap-8">
       <div class="text-center lg:text-left">
-        <h1 class="text-5xl font-black uppercase tracking-[0.3em] text-white">Thư Viện</h1>
+        <h1 class="text-5xl font-black uppercase tracking-[0.3em] text-white">My Library</h1>
         <p class="text-indigo-400 mt-2 flex items-center justify-center lg:justify-start gap-2">
           <span class="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
-          {{ meta?.total || 0 }} học phần sẵn sàng
+          {{ meta?.total || 0 }} ready-to-learn topics
         </p>
       </div>
 
@@ -27,24 +27,24 @@
           <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"></i>
           <input type="text" (input)="onSearchInput($event)"
                  [ngModel]="searchTerm"
-                 placeholder="Tìm kiếm chủ đề..." 
+                 placeholder="Search topics..." 
                  class="w-full sm:w-80 bg-slate-900/40 border border-slate-800 focus:border-indigo-500/50 py-3 pl-12 pr-6 rounded-2xl outline-none transition-all backdrop-blur-md">
         </div>
         
         <button (click)="goToCreate()" 
                 class="bg-indigo-600 hover:bg-indigo-500 text-white px-8 py-3 rounded-2xl font-bold flex items-center justify-center gap-3 transition-all shadow-lg shadow-indigo-500/20 active:scale-95">
-          <i class="fas fa-plus-circle"></i> Tạo học phần
+          <i class="fas fa-plus-circle"></i> Create Topic
         </button>
       </div>
     </div>
 
     <div class="flex flex-wrap items-center gap-3 mb-10">
-      <span class="text-slate-500 text-xs font-bold uppercase tracking-widest mr-2">Lọc theo mức độ:</span>
+      <span class="text-slate-500 text-xs font-bold uppercase tracking-widest mr-2">Filter by Level:</span>
       
       <button (click)="filterByLevel('')" 
               [class]="selectedLevel === '' ? 'bg-indigo-600 text-white border-indigo-500' : 'bg-slate-900/40 text-slate-400 border-slate-800'"
               class="px-5 py-2 rounded-xl text-xs font-bold border transition-all hover:border-indigo-500 shadow-sm hover:shadow-md">
-        TẤT CẢ
+        ALL
       </button>
 
       @for (level of levels; track level) {
@@ -83,11 +83,11 @@
                 </h3>
                 
                 <p class="text-slate-500 text-sm line-clamp-2 flex-grow">
-                  {{ topic.description || 'Chưa có mô tả cho học phần này.' }}
+                  {{ topic.description || 'No description available for this topic.' }}
                 </p>
 
                 <div class="mt-8 pt-6 border-t border-slate-800/50 flex justify-between items-center group/btn">
-                  <span class="text-xs font-bold text-indigo-400 uppercase tracking-tighter">Học ngay</span>
+                  <span class="text-xs font-bold text-indigo-400 uppercase tracking-tighter">Let's Learn</span>
                   <div class="flex items-center gap-2">
                     <i class="fas fa-play-circle text-slate-700 group-hover:text-indigo-500 transition-all text-xl"></i>
                   </div>
@@ -97,8 +97,8 @@
           } @empty {
           <div class="col-span-full py-32 text-center bg-slate-900/10 border-2 border-dashed border-slate-800 rounded-[3rem]">
             <i class="fas fa-meteor text-6xl text-slate-800 mb-6"></i>
-            <h2 class="text-2xl font-bold text-slate-600 uppercase tracking-widest">Vũ trụ trống rỗng</h2>
-            <p class="text-slate-700 mt-2">Hãy tạo học phần đầu tiên của bạn!</p>
+            <h2 class="text-2xl font-bold text-slate-600 uppercase tracking-widest">Empty Universe</h2>
+            <p class="text-slate-700 mt-2">Create your first topic!</p>
           </div>
         }
       </div>

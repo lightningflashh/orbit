@@ -1,6 +1,6 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { tap, catchError, of } from 'rxjs';
+import { tap, catchError, of, switchMap } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
@@ -25,16 +25,12 @@ export class AuthService {
   }
 
   register(registrationData: any) {
-    return this.http.post(`${this.apiUrl}/register`, registrationData).pipe(
-      tap(() => {
-        console.log('Registration successful');
-      })
-    );
+    return this.http.post(`${this.apiUrl}/register`, registrationData);
   }
 
   activateAccount(key: string) {
     return this.http.get(`${this.apiUrl}/activate`, {
-      params: { key: key } // BE sẽ nhận được: /api/activate?key=52693...
+      params: { key: key }
     });
   }
 
@@ -43,11 +39,11 @@ export class AuthService {
       withCredentials: true
     }).pipe(
       tap(() => {
-        // Vì BE set cookie, ta chỉ lưu trạng thái giả để UI biến đổi
         const userStatus = { loggedIn: true, lastLogin: new Date().getTime() };
         localStorage.setItem('user', JSON.stringify(userStatus));
         this.currentUser.set(userStatus);
-      })
+      }),
+      switchMap(() => this.checkIdentity()) // Lấy thông tin user thực từ Server sau khi login
     );
   }
 
